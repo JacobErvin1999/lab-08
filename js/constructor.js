@@ -2,41 +2,39 @@
 //try using military time instead
 var hoursInDay = 13;
 
-var Store= function(name, min, max, avg){
-  this.locationName= name;
-  this.minCustomersPerHour= min;
-  this.maxCustomersPerHour= max;
-  this.avgCookiesPerSale= avg;
-  this.customersEachHour= [];
-  this.cookiesEachHour= [];
-  this.totalDailyCookies= 0;
-}
-Store.totalCookiesPerHour= [];
-Store.setupCookieArray= function() {
+var Store = function(name, min, max, avg) {
+  this.locationName = name;
+  this.minCustomersPerHour = min;
+  this.maxCustomersPerHour = max;
+  this.avgCookiesPerSale = avg;
+  this.customersEachHour = [];
+  this.cookiesEachHour = [];
+  this.totalDailyCookies = 0;
+};
+Store.totalCookiesPerHour = [];
+Store.setupCookieArray = function() {
   for (var i = 0; i < hoursInDay; i++) {
     Store.totalCookiesPerHour.push(0);
   }
-}
-Store.prototype.calcCustomersEachHour= function() {
+};
+Store.prototype.calcCustomersEachHour = function() {
   for (var i = 0; i < hoursInDay; i++) {
     this.customersEachHour.push(
       Math.random() * (this.maxCustomersPerHour - this.minCustomersPerHour) +
         this.minCustomersPerHour
     );
   }
-}
-Store.prototype.calcCookiesEachHour= function() {
+};
+Store.prototype.calcCookiesEachHour = function() {
   this.calcCustomersEachHour();
   for (var i = 0; i < hoursInDay; i++) {
-    var oneHour = Math.ceil(
-      this.customersEachHour[i] * this.avgCookiesPerSale
-    );
+    var oneHour = Math.ceil(this.customersEachHour[i] * this.avgCookiesPerSale);
     this.cookiesEachHour.push(oneHour);
     this.totalDailyCookies += oneHour;
     Store.totalCookiesPerHour[i] += oneHour;
   }
-}
-Store.prototype.render= function() {
+};
+Store.prototype.render = function() {
   this.calcCookiesEachHour();
   var tbody = document.querySelector("tbody");
   var tr = document.createElement("tr");
@@ -52,19 +50,18 @@ Store.prototype.render= function() {
   td = document.createElement("td");
   td.textContent = this.totalDailyCookies;
   tr.appendChild(td);
-}
+};
 
-
-function renderHeader(){
+function renderHeader() {
   var thead = document.querySelector("thead");
   var tr = document.createElement("tr");
   thead.appendChild(tr);
   var td = document.createElement("td");
   tr.appendChild(td);
-  for (var i = 6; i < hoursInDay+6; i++) {
+  for (var i = 6; i < hoursInDay + 6; i++) {
     var td = document.createElement("td");
-    var time = i%12 !== 0 ? i%12 : i;
-    time += i<12 ? "am" : "pm";
+    var time = i % 12 !== 0 ? i % 12 : i;
+    time += i < 12 ? "am" : "pm";
     td.textContent = time;
     tr.appendChild(td);
   }
@@ -73,15 +70,16 @@ function renderHeader(){
   tr.appendChild(td);
 }
 
-function renderFooter(){
+function renderFooter() {
   var tfoot = document.querySelector("tfoot");
+  tfoot.innerHTML= "";
   var tr = document.createElement("tr");
   tfoot.appendChild(tr);
   var td = document.createElement("td");
   td.textContent = "Total";
   tr.appendChild(td);
-  var totalCookies= 0;
-  for (var i = 0; i < hoursInDay; i++){
+  var totalCookies = 0;
+  for (var i = 0; i < hoursInDay; i++) {
     var td = document.createElement("td");
     td.textContent = Store.totalCookiesPerHour[i];
     tr.appendChild(td);
@@ -94,7 +92,21 @@ function renderFooter(){
 //create variable to hold all shops and assign an empty array
 var allShops = []; //add my stores
 
+function executeForm() {
+  event.preventDefault();
+  console.log(this.elements);
+  var storeName= this.elements[1].value;
+  var minCustomers= this.elements[2].value;
+  var maxCustomers= this.elements[3].value;
+  var averageSale= this.elements[4].value;
+  var newStore= new Store(storeName, minCustomers, maxCustomers, averageSale);
+  allShops.push(newStore);
+  newStore.render();
+  renderFooter();
+}
 (function renderAllShops() {
+  var form = document.querySelector("form");
+  form.addEventListener("submit", executeForm);
   allShops.push(new Store("1st and Pike", 23, 65, 6.3));
   allShops.push(new Store("SeaTac Airport", 3, 24, 1.2));
   allShops.push(new Store("Seattle Center", 11, 38, 3.7));

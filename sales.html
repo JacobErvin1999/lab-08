@@ -11,10 +11,19 @@
     <br />
     <img src="images/salmon.png" />
     <form>
-      <input id="storeName" type="text" placeholder="Store Name">
-      <input id="minCustomer" type="number" placeholder="Min">
-      <input id="maxCustomer" type="number" placeholder="Max">
-      <input id="averageCookiesPerSale" type="number" placeholder="AvgCookies">
+      <fieldset>
+        <legend>Store Details</legend>
+        <input id="storeName" type="text" placeholder="Store Name" />
+        <input id="minCustomer" type="number" placeholder="Min" />
+        <input id="maxCustomer" type="number" placeholder="Max" />
+        <input
+          id="averageCookiesPerSale"
+          type="number"
+          placeholder="AvgCookies"
+          step="0.1"
+        />
+      </fieldset>
+      <input type="submit" value="Submit" />
     </form>
     <table>
       <thead></thead>
@@ -22,9 +31,6 @@
       <tfoot></tfoot>
     </table>
 
-    
-    
-    
     <script src="js/constructor.js"></script>
   </body>
 </html>
