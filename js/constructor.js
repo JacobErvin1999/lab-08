@@ -94,10 +94,18 @@ var allShops = []; //add my stores
 
 function executeForm() {
   event.preventDefault();
-  console.log(this.elements);
   var storeName= this.elements[1].value;
+  if (storeName === ""){
+    window.alert("Please name the store")
+    newStore.render() = false
+  }
+  console.log(this.element);
   var minCustomers= this.elements[2].value;
   var maxCustomers= this.elements[3].value;
+  if (minCustomers > maxCustomers){
+    window.alert("Min is bigger than Max, please fix and try again.")
+    newStore.render() = false
+  }
   var averageSale= this.elements[4].value;
   var newStore= new Store(storeName, minCustomers, maxCustomers, averageSale);
   allShops.push(newStore);
