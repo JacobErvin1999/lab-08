@@ -1,0 +1,19 @@
+body{
+    background-image: url("https://www.worldatlas.com/r/w728-h425-c728x425/upload/36/4f/c4/shutterstock-239392108.jpg");
+    background-repeat: no-repeat;
+    background-size:2000px 300px;
+    background-color:rgb(85, 155, 179);
+    color:yellowgreen;
+}
+a {
+    font-size: 30px;
+    color: black;
+    border:red solid 5px;
+    
+}
+img {
+    height:175px;
+};
+p{
+    font-size:60px;
+}
